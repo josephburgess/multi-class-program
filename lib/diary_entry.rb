@@ -1,20 +1,12 @@
 class DiaryEntry
   def initialize(title, contents)
-  @title = title
-  @contents = contents
-
+    @title = title
+    @contents = contents
   end
 
-  def title
-    @title
-  end
+  attr_reader :title, :contents
 
-  def contents
-    @contents
-  end
-
-  def count_words 
+  def count_words
     @contents.split.count
   end
-
 end

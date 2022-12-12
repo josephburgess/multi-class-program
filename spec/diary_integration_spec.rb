@@ -1,23 +1,14 @@
-require 'contacts.rb'
-require 'diary_entry.rb'
-require 'diary.rb'
-require 'todo_list.rb'
-require 'todo.rb'
+require 'contact_book'
+require 'diary_entry'
+require 'diary'
+require 'todo_list'
+require 'todo'
 
-=begin
-  
-
-    As a user
-    So that I can keep track of my contacts
-    I want to see a list of all of the mobile phone numbers in all my diary entries
-
-=end
 RSpec.describe 'diary entry integration spec' do
-
-  contents1 = "bananas " * 100
-  contents2 = "bananas " * 200
-  contents3 = "bananas " * 300
-  contents4 = "bananas " * 400
+  contents1 = 'bananas ' * 100
+  contents2 = 'bananas ' * 200
+  contents3 = 'bananas ' * 300
+  contents4 = 'bananas ' * 400
 
   it 'will add a new entry when passed a diary entry' do
     diary = Diary.new
@@ -34,7 +25,6 @@ RSpec.describe 'diary entry integration spec' do
     diary.add(diary_entry2)
     expect(diary.all).to eq "\n **#{diary_entry.title}** \n #{diary_entry.contents} \n **#{diary_entry2.title}** \n #{diary_entry2.contents} "
   end
-
 
   it 'will return the exact best entry when there is an exact match' do
     diary = Diary.new
@@ -136,11 +126,32 @@ RSpec.describe 'diary entry integration spec' do
     expect { todolist.mark_all_done }.to raise_error 'There are no pending tasks!'
   end
 
-  it 'will scan all diary entries for phone numbers and store them in an array' do
+  it 'will scan a diary entriy for phone numbers and store them in an array' do
     diary = Diary.new
-    diary_entry = DiaryEntry.new('Title', '07763212345, 07782873613, 07728198731')
-    add
+    diary_entry = DiaryEntry.new('Title', '11111111111, 22222222222, 33333333333')
+    diary.add(diary_entry)
     contactbook = ContactBook.new
-    
-end
+    expect(contactbook.extract_numbers(diary)).to eq %w[11111111111 22222222222 33333333333]
+  end
 
+  it 'will scan all diary entries for phone numbers and store them in an array' do
+    diary2 = Diary.new
+    diary_entry = DiaryEntry.new('Title', '44444444444, 55555555555, 66666666666')
+    diary2.add(diary_entry)
+    diary_entry2 = DiaryEntry.new('Title', '77777777777')
+    diary2.add(diary_entry2)
+    contactbook = ContactBook.new
+    expect(contactbook.extract_numbers(diary2)).to eq %w[44444444444 55555555555 66666666666 77777777777]
+  end
+
+  it 'will return the list of numbers when requested' do
+    diary2 = Diary.new
+    diary_entry = DiaryEntry.new('Title', '44444444444, 55555555555, 66666666666')
+    diary2.add(diary_entry)
+    diary_entry2 = DiaryEntry.new('Title', '77777777777')
+    diary2.add(diary_entry2)
+    contactbook = ContactBook.new
+    contactbook.extract_numbers(diary2)
+    expect(contactbook.numbers).to eq %w[44444444444 55555555555 66666666666 77777777777]
+  end
+end

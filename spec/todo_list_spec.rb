@@ -1,7 +1,6 @@
 require 'todo_list'
 
 RSpec.describe TodoList do
-
   it 'initializes with an empty array for the todos to be added to' do
     todolist = TodoList.new
     expect(todolist.instance_variable_get(:@list)).to eq []
