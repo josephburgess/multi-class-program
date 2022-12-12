@@ -1,5 +1,12 @@
+# Designing and test driving a multiple class system in ruby
+
+_Task submitted in Weeks 1 and 2 on the Makers software engineering bootcamp._
+
+_Given the below recipe we were tasked with test-driving a multi-class system with both integration and unit tests._
+
+```
     As a user
-    So that I can record my **experiences**
+    So that I can record my experiences
     I want to keep a regular diary
 
     As a user
@@ -17,3 +24,4 @@
     As a user
     So that I can keep track of my contacts
     I want to see a list of all of the mobile phone numbers in all my diary entries
+```
